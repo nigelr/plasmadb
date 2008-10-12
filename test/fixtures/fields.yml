@@ -1,0 +1,16 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+field_1:
+  name: user_name
+
+field_2:
+  name: password
+
+field_3:
+  name: age
+
+field_4:
+  name: hobbies
+
+field_5:
+  name: name

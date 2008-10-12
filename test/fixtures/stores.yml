@@ -1,0 +1,31 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+store_1:
+  field: field_1
+  doc: doc_1
+  data: fredf
+
+store_2:
+  field: field_2
+  doc: doc_1
+  data: big_rock
+
+store_3:
+  field: field_3
+  doc: doc_2
+  data: 25
+
+store_4:
+  field: field_1
+  doc: doc_2
+  data: barneyb
+
+store_5:
+  field: field_5
+  doc: doc_2
+  data: Barney Rubble
+
+store_6:
+  field: field_2
+  doc: doc_2
+  data: barneys_password
