@@ -4,28 +4,41 @@ store_1:
   field: field_1
   doc: doc_1
   data: fredf
+  version: 2
 
 store_2:
   field: field_2
   doc: doc_1
   data: big_rock
+  version: 2
 
 store_3:
   field: field_3
   doc: doc_2
   data: 25
+  version: 1
 
 store_4:
   field: field_1
   doc: doc_2
   data: barneyb
+  version: 1
 
 store_5:
   field: field_5
   doc: doc_2
   data: Barney Rubble
+  version: 1
 
 store_6:
   field: field_2
   doc: doc_2
   data: barneys_password
+  version: 1
+
+store_7:
+  field: field_1
+  doc: doc_1
+  data: nothing
+  version: 1
+

@@ -4,7 +4,7 @@ class CreateStores < ActiveRecord::Migration
       t.references :doc
       t.references :field
       t.string :data, :limit => 10000
-
+      t.integer :version
       t.timestamps
     end
   end

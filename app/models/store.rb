@@ -41,5 +41,8 @@ class Store < ActiveRecord::Base
     {:conditions => condition}
   }
 
+
+
+
 end
 
