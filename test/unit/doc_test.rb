@@ -11,13 +11,10 @@ class DocTest < ActiveSupport::TestCase
   def test_retrieve_multiple
     doc = [docs(:doc_1).id, docs(:doc_2).id]
     res = Doc.retrieve(doc)
-    assert((res - 
-          [{:age=>"25", :_id=>451413160, :password=>"barneys_password", :user_name=>"barneyb", :_rev=>1, :name=>"Barney Rubble"},
-          {:_id=>451413161, :user_name=>"nothing", :_rev=>2}]
-      ).empty?
-    )
 
     assert_equal(res.length, 2)
+    assert res.include?({:password=>"barneys_password", :age=>"25", :name=>"Barney Rubble", :_id=>451413160, :user_name=>"barneyb", :_rev=>1})
+    assert res.include?({:_id=>451413161, :user_name=>"nothing", :_rev=>2})
   end
 
   def test_update
@@ -26,7 +23,16 @@ class DocTest < ActiveSupport::TestCase
     res[:password] = "god"
 
     doc1 = Doc.store(res)
-    assert_equal({:_id=>451413161, :password=>"god", :user_name=>"fredf"}, doc1)
+    assert_equal({:_id=>451413161, :_rev=>3, :password=>"god", :user_name=>"nothing"}, doc1)
+  end
+
+  def test_update_should_fail_if_rev_changed
+    doc = docs(:doc_1)
+    res = Doc.retrieve(doc.id)
+    res[:password] = "god"
+
+    doc1 = Doc.store(res)
+    assert_equal({:_id=>451413161, :_rev=>3, :password=>"god", :user_name=>"nothing"}, doc1)
   end
 
   def test_update_and_removes_document_item

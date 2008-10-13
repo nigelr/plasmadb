@@ -1,13 +1,13 @@
 class Doc < ActiveRecord::Base
-  has_many :stores , :conditions => 'stores.version is null'
-  has_many :all_stores,
-    :class_name => "Store",
-    :foreign_key => "doc_id"
+  has_many :stores, :conditions => 'stores.version is null'
+#  has_many :all_stores,
+#    :class_name => "Store",
+#    :foreign_key => "doc_id"
   has_many :fields, :through => :stores
 
-  def self.retrieve id
+  def self.retrieve id, options={}
     docs = self.find(id)
-    id.is_a?(Array) ? docs.inject([]) {|build, doc| build << doc.retrieve} : docs.retrieve
+    id.is_a?(Array) ? docs.inject([]) {|build, doc| build << doc.retrieve} : docs.retrieve(options[:rev])
   end
 
   def self.store items
@@ -45,9 +45,8 @@ class Doc < ActiveRecord::Base
   end
 
 
-  def retrieve
-    #    stores.inject({:_id=>self.id, :_rev=>self.rev}) {|build, store| build.merge!(store.field.name.to_sym=>store.data)}
-    stores.inject({:_id=>self.id, :_rev => self.rev, }) {|build, store| build.merge!(store.field.name.to_sym=>store.data)}
+  def retrieve(rev=nil)
+    stores.revision(rev).inject({:_id=>self.id, :_rev => self.rev, }) {|build, store| build.merge!(store.field.name.to_sym=>store.data)}
   end
   
   def store_items items
@@ -68,11 +67,9 @@ class Doc < ActiveRecord::Base
   def update_items items
     stores.update_all("version=#{rev}")
     for field_name, item in items
-      unless field_name.to_s == "_id"
+      unless field_name.to_s == "_id" or field_name.to_s == "_rev"
         field = Field.find_or_create_by_name(field_name.to_s)
         stores.create(:field => field, :data => item, :version => nil)
-        #        puts "rev=#{rev}"
-        #        store.update_attribute(:rev, rev)
       end
     end
   end

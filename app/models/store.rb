@@ -2,6 +2,10 @@ class Store < ActiveRecord::Base
   belongs_to :doc
   belongs_to :field
 
+  named_scope :revision, lambda { |rev|
+    {:conditions =>(rev.nil? ?nil : {:rev=>rev})}
+  }
+
   named_scope :include_fields, lambda {|fields|
 
 
