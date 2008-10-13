@@ -2,16 +2,25 @@ class Store < ActiveRecord::Base
   belongs_to :doc
   belongs_to :field
 
-  named_scope :revision, lambda { |rev|
-    {:conditions =>(rev.nil? ?nil : {:rev=>rev})}
+  named_scope :revision, lambda { |*rev|
+
+    rev = rev.empty? ? 0 : rev.first
+    condition = case rev
+    when :all
+      nil
+    when :history
+      ["rev != ?", 0]
+    else # :current
+      {:rev=>rev||0}
+    end
+    {:conditions =>condition}
   }
 
   named_scope :include_fields, lambda {|fields|
-
-
     if fields.nil? 
       condition = nil
     else
+      # TODO optimize this....
       field_ids = [fields].flatten.map do |field_name|
         field = Field.find_by_name(field_name.to_s)
         field.id if field
@@ -22,31 +31,29 @@ class Store < ActiveRecord::Base
   }
 
   named_scope :search_for, lambda {|value, operator|
-    case operator
+    condition = case operator
     when ">"
-      condition = ["data > ?", value]
+      ["data > ?", value]
     when "<"
-      condition = ["data < ?", value]
+      ["data < ?", value]
     when ">="
-      condition = ["data >= ?", value]
+      ["data >= ?", value]
     when "<="
-      condition = ["data <= ?", value]
+      ["data <= ?", value]
     when "!="
-      condition = ["data != ?", value]
+      ["data != ?", value]
     when "*"
-      condition = ["data like ?", "%"+value.to_s+"%"]
+      ["data like ?", "%"+value.to_s+"%"]
     when "^"
-      condition = ["data like ?", "%"+value.to_s]
+      ["data like ?", "%"+value.to_s]
     when "$"
-      condition = ["data like ?", value.to_s+"%"]
-    else
-      condition ={:data=>value}
+      ["data like ?", value.to_s+"%"]
+    else # = or ==
+      {:data=>value}
     end
     {:conditions => condition}
   }
 
-
-
-
+  
 end
 

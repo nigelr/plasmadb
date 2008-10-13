@@ -18,15 +18,14 @@ ActiveRecord::Schema.define(:version => 20081012090603) do
   end
 
   create_table "fields", :force => true do |t|
-    t.string   "name"
-    t.datetime "archived"
+    t.string "name"
   end
 
   create_table "stores", :force => true do |t|
     t.integer  "doc_id"
     t.integer  "field_id"
     t.string   "data",       :limit => 10000
-    t.integer  "version"
+    t.integer  "rev",                         :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
