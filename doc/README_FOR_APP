@@ -18,6 +18,20 @@ DOD has three main methods
 * store
 * search
 
+=== Usage Examples
+==== Retrieve
+* <b><tt>Doc.retrieve 56</b></tt>     => retrieves single document
+* <b><tt>Doc.retrieve [45, 96, 100, 4]</b></tt>  => retrieves these documents
+==== Store
+* <b><tt>Doc.store { :user_name => "superman", :pasword => "letmein" }</b></tt>  => creates new document
+* <b><tt>Doc.store { :_id => 96, :_rev => 3, :user_name => "atomicboy", :age => 12 }</b></tt>  => Updates document 96 with new values
+==== Search
+* <b><tt>Doc.search "superman"</b></tt>  => Returns an array of document ids with exact match for "superman" in any field
+* <b><tt>Doc.search "superman", :fields=>:user_name</b></tt>  => Returns an array of document ids with exact match for "superman" in fileds name "user_name"
+* <b><tt>Doc.search "per", :operator => "*"</b></tt>  => Returns an array documents which contains the letters "per" in any_field
+* <b><tt>Doc.search "superman", :ids => [45, 10]</b></tt>  => Returns an array of document ids with exact match for "superman" in any field. Only searches the supplied document ids
+
+== Build Documentation
 Build "rake doc:app" for documentation.
 
 == Roadmap / Features
