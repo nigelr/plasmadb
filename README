@@ -22,7 +22,7 @@ Build "rake doc:app" for documentation.
 
 == Roadmap / Features
 * Views/custom indexes
-* Search filtered on ids
+* Turn into a plugin
 
 == Credits
 * Nigel Rausch

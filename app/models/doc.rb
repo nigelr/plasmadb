@@ -63,12 +63,13 @@ class Doc < ActiveRecord::Base
   # *  operator
   #     "==" (default), ">", "<", ">=", "<=", "!=", "*" contains, "^" begins, "$" ends
   # *  rev - revision to search (:all, :history, :current (default) or revision number)
+  # *  ids - list of document ids to search (if left blank then all ids)
   #
   # ==== Returns
   # * Array of document ids
   #
   def self.search value, options={}
-    res = Store.include_fields(options[:fields]).search_for(value, options[:operator]).revision(options[:rev]).find(:all, :select=>:doc_id)
+    res = Store.include_fields(options[:fields]).search_for(value, options[:operator]).revision(options[:rev]).filter_on_ids(options[:ids]).find(:all, :select=>:doc_id)
     res.map {|store| store.doc_id}
   end
 

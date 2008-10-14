@@ -53,6 +53,11 @@ class Store < ActiveRecord::Base
     {:conditions => condition}
   }
 
+
+  named_scope :filter_on_ids, lambda {|*ids|
+#    puts ids.inspect
+    {:conditions=>( ids.empty? || ids.first.nil? ? nil :  {:doc_id=>ids.flatten})}
+  }
   
 end
 

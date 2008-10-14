@@ -37,4 +37,16 @@ class StoreTest < ActiveSupport::TestCase
 
   end
 
+  def test_filter_on_ids
+    doc_1 = docs(:doc_1)
+    doc_2 = docs(:doc_2)
+    both = [doc_1, doc_2]
+    
+    assert_equal(Store.find_all_by_doc_id(doc_1), Store.filter_on_ids(doc_1))
+    assert_equal(Store.find_all_by_doc_id(doc_2), Store.filter_on_ids(doc_2))
+    assert_equal(Store.find_all_by_doc_id(both), Store.filter_on_ids(both))
+    assert_equal Store.all, Store.filter_on_ids
+    assert_equal Store.all, Store.filter_on_ids(nil)
+  end
+
 end

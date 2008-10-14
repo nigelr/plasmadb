@@ -89,6 +89,7 @@ class DocTest < ActiveSupport::TestCase
 
   # search
   def test_search
+    # TODO Add more tests and test results more 
     doc_2 = docs(:doc_2)
 
     ret = Doc.search("barneyb")
@@ -109,6 +110,9 @@ class DocTest < ActiveSupport::TestCase
     assert ret
 
     ret = Doc.search("n", :operator => "*")
+    assert ret
+
+    ret = Doc.search("n", :ids=>stores(:store_4))
     assert ret
 
     
