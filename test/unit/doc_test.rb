@@ -99,24 +99,23 @@ class DocTest < ActiveSupport::TestCase
     assert_equal(doc_2.id, ret.first)
 
     ret = Doc.search("barneyb", :fields=>:user_name)
-    assert ret
+    assert !ret.empty?
 
     ret = Doc.search("barneyb", :fields=>[:user_name, :password])
-    assert ret
+    assert !ret.empty?
 
     ret = Doc.search("barneyb", :fields=>:password)
-    assert_equal([], ret)
+    assert ret.empty?
 
     ret = Doc.search("barneyb", :fields=>:user_name)
-    assert ret
+    assert !ret.empty?
 
     ret = Doc.search("n", :operator => "*")
-    assert ret
+    assert !ret.empty?
 
-    ret = Doc.search("n", :ids=>stores(:store_4))
-    assert ret
-#  end
-#  def test_sep
+    ret = Doc.search("n", :ids=>docs(:doc_2).id, :operator => "*")
+    assert !ret.empty?
+
     ret = Doc.search(["flinstone", 25])
     assert !ret.empty?
 
