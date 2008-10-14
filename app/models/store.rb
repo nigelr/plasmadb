@@ -2,6 +2,8 @@ class Store < ActiveRecord::Base
   belongs_to :doc
   belongs_to :field
 
+  serialize :data
+
   MAX_ITEM_SIZE = 10000
 
   named_scope :revision, lambda { |*rev|
@@ -30,6 +32,14 @@ class Store < ActiveRecord::Base
   }
 
   named_scope :search_for, lambda {|value, operator|
+
+    value = case value
+    when Hash, Array
+      value.to_yaml
+    else
+      value.to_s
+    end
+
     condition = case operator
     when ">"
       ["data > ?", value]
@@ -55,7 +65,7 @@ class Store < ActiveRecord::Base
 
 
   named_scope :filter_on_ids, lambda {|*ids|
-#    puts ids.inspect
+    #    puts ids.inspect
     {:conditions=>( ids.empty? || ids.first.nil? ? nil :  {:doc_id=>ids.flatten})}
   }
   

@@ -19,7 +19,8 @@ class DocTest < ActiveSupport::TestCase
     res = Doc.retrieve(doc_ids)
 
     assert_equal(res.length, 2)
-    assert res.include?({:password=>"barneys_password", :age=>"25", :name=>"Barney Rubble", :_id=>451413160, :user_name=>"barneyb", :_rev=>1})
+    puts res.inspect
+    assert res.include?({:hobbies=>["flinstone", 25] ,:password=>"barneys_password", :age=>25, :name=>"Barney Rubble", :_id=>451413160, :user_name=>"barneyb", :_rev=>1})
     assert res.include?({:_id=>451413161, :user_name=>"nothing", :_rev=>2})
   end
 
@@ -114,7 +115,15 @@ class DocTest < ActiveSupport::TestCase
 
     ret = Doc.search("n", :ids=>stores(:store_4))
     assert ret
+#  end
+#  def test_sep
+    ret = Doc.search(["flinstone", 25])
+    assert !ret.empty?
 
+    a = {:a=>1, :b=>"x", :c=>[10,20]}
+    Doc.store(:hobbies=>a)
+    ret = Doc.search a
+    assert 1, ret.length
     
   end
 

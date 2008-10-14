@@ -42,3 +42,9 @@ store_7:
   data: nothing
   rev: 0
 
+store_8:
+  field: field_4
+  doc: doc_2
+  data: <%= ["flinstone", 25].to_yaml.inspect %>
+  rev: 0
+
