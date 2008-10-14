@@ -2,6 +2,14 @@ require 'test_helper'
 
 class StoreTest < ActiveSupport::TestCase
 
+
+  def test_maximum_size_of_data_field
+    test = "".ljust(Store::MAX_ITEM_SIZE,"0123456789abc")
+    rec = Store.create(:data=>test)
+    rec.reload
+    assert_equal(test, rec.data)
+  end
+
   def test_revision
     assert_equal Store.find_all_by_rev(0), Store.revision
     assert_equal Store.find_all_by_rev(0), Store.revision(nil)

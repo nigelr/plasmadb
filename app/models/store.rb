@@ -2,29 +2,28 @@ class Store < ActiveRecord::Base
   belongs_to :doc
   belongs_to :field
 
-  named_scope :revision, lambda { |*rev|
+  MAX_ITEM_SIZE = 10000
 
+  named_scope :revision, lambda { |*rev|
     rev = rev.empty? ? 0 : rev.first
-    condition = case rev
-    when :all
-      nil
-    when :history
-      ["rev != ?", 0]
-    else # :current
-      {:rev=>rev||0}
-    end
-    {:conditions =>condition}
+    
+    {:conditions =>case rev
+      when :all
+        nil
+      when :history
+        ["rev != ?", 0]
+      else # :current
+        {:rev=>rev||0}
+      end
+    }
   }
 
   named_scope :include_fields, lambda {|fields|
     if fields.nil? 
       condition = nil
     else
-      # TODO optimize this....
-      field_ids = [fields].flatten.map do |field_name|
-        field = Field.find_by_name(field_name.to_s)
-        field.id if field
-      end
+      field_names = [fields].flatten.map {|field_name| field_name.to_s}
+      field_ids = Field.find_all_by_name(field_names).map {|field| field.id}
       condition = {:field_id=>field_ids}
     end
     { :conditions=>condition }

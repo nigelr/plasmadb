@@ -23,6 +23,14 @@ class DocTest < ActiveSupport::TestCase
     assert res.include?({:_id=>451413161, :user_name=>"nothing", :_rev=>2})
   end
 
+  def test_retrieve_when_id_does_not_exist
+    id = Doc.last.id + 1
+
+    assert_nil Doc.retrieve id
+    assert_nil Doc.retrieve([id,id+1])
+  end
+
+
   # Update
   def test_update
     doc = docs(:doc_1)
@@ -37,10 +45,10 @@ class DocTest < ActiveSupport::TestCase
     doc = docs(:doc_1)
     res = Doc.retrieve(doc.id, :rev=>1)
     res[:password] = "god"
-    assert_raise(RuntimeError) do
-      doc1 = Doc.store(res)
-      assert_nil(doc1)
-    end
+    #    assert_raise(RuntimeError) do
+    doc1 = Doc.store(res)
+    assert_equal(false, doc1)
+    #    end
   end
 
   def test_update_and_removes_document_item
