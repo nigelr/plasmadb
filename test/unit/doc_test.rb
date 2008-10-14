@@ -19,7 +19,7 @@ class DocTest < ActiveSupport::TestCase
     res = Doc.retrieve(doc_ids)
 
     assert_equal(res.length, 2)
-    puts res.inspect
+#    puts res.inspect
     assert res.include?({:hobbies=>["flinstone", 25] ,:password=>"barneys_password", :age=>25, :name=>"Barney Rubble", :_id=>451413160, :user_name=>"barneyb", :_rev=>1})
     assert res.include?({:_id=>451413161, :user_name=>"nothing", :_rev=>2})
   end
@@ -27,7 +27,7 @@ class DocTest < ActiveSupport::TestCase
   def test_retrieve_when_id_does_not_exist
     id = Doc.last.id + 1
 
-    assert_nil Doc.retrieve id
+    assert_nil Doc.retrieve( id)
     assert_nil Doc.retrieve([id,id+1])
   end
 
