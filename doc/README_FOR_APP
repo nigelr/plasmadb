@@ -1,1 +1,31 @@
-../README
+= DOD3 - Document Oriented Database (3) within Rails
+
+== Summary
+Concept build of a Documented Oriented Database within rails using active record.
+
+For information on Documented Oriented Database - http://en.wikipedia.org/wiki/Document-oriented_database
+
+A true Document Oriented database is designed to allow for dynamic schema and huge datastores. They require restful or other unique methods to deal with data. Searching for data is done view views which need to be prepared  prior to the search.
+
+This system stores all information into a relation database, it breaks up each field as it receives it and stores it into its own store. This reduces efficiency but improves searchability. When it saves each item it creates or re-uses an existing field. This allows for searching by either a field (or multiple) for a specific peaice of data).
+
+On the roadmap is building and searching custom views (indexes).
+
+
+== Usage
+DOD has three main methods
+* retrieve
+* store
+* search
+
+Build "rake doc:app" for documentation.
+
+== Roadmap / Features
+* Views/custom indexes
+* Search filtered on ids
+
+== Credits
+* Nigel Rausch
+
+== License
+* None
