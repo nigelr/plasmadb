@@ -1,0 +1,22 @@
+Views or Field Separation
+
+Views
+Pro
+- standard implementation
+
+Con
+- Need to save views in code
+- Need to rebuild index if view changes
+- Need to callback to run index on every update or insert
+
+
+Separation
+Pro
+- Easy search of any data
+- 
+
+Cons
+- can't search using a hash
+- need to parse data more and create more records
+- could need many field definitions if an array had 200 elements  eg. tag_0, tag_1 etc
+- need extra parameter to say if search is recursive

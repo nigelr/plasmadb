@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  field: 
+  block_code: MyString
+
+two:
+  field: 
+  block_code: MyString

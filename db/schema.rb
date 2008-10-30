@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081012090603) do
+ActiveRecord::Schema.define(:version => 20081028065709) do
 
   create_table "docs", :force => true do |t|
     t.integer  "rev"
@@ -26,6 +26,13 @@ ActiveRecord::Schema.define(:version => 20081012090603) do
     t.integer  "field_id"
     t.string   "data",       :limit => 10000
     t.integer  "rev",                         :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "views", :force => true do |t|
+    t.integer  "field_id"
+    t.string   "block_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

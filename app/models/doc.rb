@@ -80,11 +80,35 @@ class Doc < ActiveRecord::Base
   
   def store_items items # :nodoc:
     stores.revision(nil).update_all(:rev=>rev)
-    for field_name, item in items
-      unless field_name.to_s == "_id" or field_name.to_s == "_rev"
-        field = Field.find_or_create_by_name(field_name.to_s)
-        stores.create(:field => field, :data => item, :rev => 0)
+    for field_name, value in items
+      field_name = field_name.to_s
+      unless field_name == "_id" or field_name == "_rev"
+        store_data field_name, value
       end
+    end
+
+    build_it items
+
+  end
+
+  def store_data field_name, value
+    field = Field.find_or_create_by_name(field_name)
+    stores.create(:field => field, :data => value, :rev => 0)
+  end
+
+
+  def build_it args
+    for view in View.all
+      build_view_data view.field.name do
+        eval view.block_code
+      end
+    end
+  end
+
+  def build_view_data view_name, default_value = nil
+    view_name = "_" + view_name.to_s
+    begin
+      store_data view_name, yield
     end
   end
 
