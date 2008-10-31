@@ -5,8 +5,8 @@ class Doc < ActiveRecord::Base
   # Retrieve document by id(s)
   #
   # ==== Parameters
-  # * id - Either a
-  # *    :all
+  # * id 
+  # *    :all, :first, :last
   # *    single id
   # *    array of ids
   # * options:
@@ -18,14 +18,19 @@ class Doc < ActiveRecord::Base
   # * nil if none found
   #
   def self.retrieve id, options={}
-    if id == :all
-      docs = self.find(:all)
+    case id
+    when Symbol
+      if id == :all
+        docs = self.find(id)
+      else
+        docs = [self.find(id)]
+      end
     else
       docs = self.find_all_by_id(id)
     end
     unless docs.empty?
-     res = (id.is_a?(Array) or id == :all) ? docs.inject([]) {|build, doc| build << doc.retrieve} : docs.first.retrieve(options[:rev]||0)
-#     a = docs.map {|doc| doc.retrieve} #: docs.first.retrieve(options[:rev]||0)
+      res = (id.is_a?(Array) or id == :all) ? docs.inject([]) {|build, doc| build << doc.retrieve} : docs.first.retrieve(options[:rev]||0)
+      #     a = docs.map {|doc| doc.retrieve} #: docs.first.retrieve(options[:rev]||0)
     end
     return res
   end
@@ -96,7 +101,7 @@ class Doc < ActiveRecord::Base
       end
     end
 
-#    build_it items
+    #    build_it items
 
   end
 

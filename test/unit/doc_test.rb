@@ -4,8 +4,12 @@ class DocTest < ActiveSupport::TestCase
   # Retrieval
   def test_retrieve_all
     res = Doc.retrieve :all
-    puts "res = #{res[2].inspect}"
     assert_equal 2, res.length
+  end
+
+  def test_retrieve_first
+    res = Doc.retrieve :first
+    assert_equal(res[:_id], 451413160)
   end
 
   def test_retrieve
@@ -25,7 +29,7 @@ class DocTest < ActiveSupport::TestCase
     res = Doc.retrieve(doc_ids)
 
     assert_equal(res.length, 2)
-#    puts res.inspect
+    #    puts res.inspect
     assert res.include?({:hobbies=>["flinstone", 25] ,:password=>"barneys_password", :age=>25, :name=>"Barney Rubble", :_id=>451413160, :user_name=>"barneyb", :_rev=>1})
     assert res.include?({:_id=>451413161, :user_name=>"nothing", :_rev=>2})
   end
