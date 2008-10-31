@@ -10,7 +10,7 @@ class Doc < ActiveRecord::Base
   # *    single id
   # *    array of ids
   # * options:
-  # *  :rev Revion of document to return
+  # *  :rev Revion of document to return (supported for singular lookup only)
   #   
   # ==== Returns
   # * document if single id
@@ -29,7 +29,7 @@ class Doc < ActiveRecord::Base
       docs = self.find_all_by_id(id)
     end
     unless docs.empty?
-      res = (id.is_a?(Array) or id == :all) ? docs.inject([]) {|build, doc| build << doc.retrieve} : docs.first.retrieve(options[:rev]||0)
+      res = (id.is_a?(Array) or id == :all) ? docs.map {|doc| doc.retrieve} : docs.first.retrieve(options[:rev]||0)
       #     a = docs.map {|doc| doc.retrieve} #: docs.first.retrieve(options[:rev]||0)
     end
     return res

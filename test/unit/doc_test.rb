@@ -12,6 +12,11 @@ class DocTest < ActiveSupport::TestCase
     assert_equal(res[:_id], 451413160)
   end
 
+  def test_retrieve_last
+    res = Doc.retrieve :last
+    assert_equal(res[:_id], 451413161)
+  end
+
   def test_retrieve
     doc = docs(:doc_1)
     res = Doc.retrieve(doc.id)
