@@ -20,6 +20,7 @@ DOD has three main methods
 
 === Usage Examples
 ==== Retrieve
+* <b><tt>Doc.retrieve :all</b></tt>  => retrieves these documents
 * <b><tt>Doc.retrieve 56</b></tt>     => retrieves single document
 * <b><tt>Doc.retrieve [45, 96, 100, 4]</b></tt>  => retrieves these documents
 ==== Store

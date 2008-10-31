@@ -5,7 +5,10 @@ class Doc < ActiveRecord::Base
   # Retrieve document by id(s)
   #
   # ==== Parameters
-  # * id - Either a single or array of ids
+  # * id - Either a
+  # *    :all
+  # *    single id
+  # *    array of ids
   # * options:
   # *  :rev Revion of document to return
   #   
