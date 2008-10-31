@@ -2,6 +2,12 @@ require 'test_helper'
 
 class DocTest < ActiveSupport::TestCase
   # Retrieval
+  def test_retrieve_all
+    res = Doc.retrieve :all
+    puts "res = #{res[2].inspect}"
+    assert_equal 2, res.length
+  end
+
   def test_retrieve
     doc = docs(:doc_1)
     res = Doc.retrieve(doc.id)

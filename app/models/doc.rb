@@ -15,10 +15,16 @@ class Doc < ActiveRecord::Base
   # * nil if none found
   #
   def self.retrieve id, options={}
-    docs = self.find_all_by_id(id)
-    unless docs.empty?
-      id.is_a?(Array) ? docs.inject([]) {|build, doc| build << doc.retrieve} : docs.first.retrieve(options[:rev]||0)
+    if id == :all
+      docs = self.find(:all)
+    else
+      docs = self.find_all_by_id(id)
     end
+    unless docs.empty?
+     res = (id.is_a?(Array) or id == :all) ? docs.inject([]) {|build, doc| build << doc.retrieve} : docs.first.retrieve(options[:rev]||0)
+#     a = docs.map {|doc| doc.retrieve} #: docs.first.retrieve(options[:rev]||0)
+    end
+    return res
   end
 
   # Stores or updates a document into the database
@@ -87,7 +93,7 @@ class Doc < ActiveRecord::Base
       end
     end
 
-    build_it items
+#    build_it items
 
   end
 
