@@ -106,13 +106,13 @@ class Doc < ActiveRecord::Base
 
   end
 
-  def store_data field_name, value
+  def store_data field_name, value # :nodoc:
     field = Field.find_or_create_by_name(field_name)
     stores.create(:field => field, :data => value, :rev => 0)
   end
 
 
-  def build_it args
+  def build_it args # :nodoc:
     for view in View.all
       build_view_data view.field.name do
         eval view.block_code
@@ -120,7 +120,7 @@ class Doc < ActiveRecord::Base
     end
   end
 
-  def build_view_data view_name, default_value = nil
+  def build_view_data view_name, default_value = nil # :nodoc:
     view_name = "_" + view_name.to_s
     begin
       store_data view_name, yield
