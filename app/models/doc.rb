@@ -88,8 +88,9 @@ class Doc < ActiveRecord::Base
   end
 
 
-  def retrieve(rev=0) # :nodoc:
-    stores.revision(rev).inject({:_id=>self.id, :_rev => (rev.to_i==0 ? self.rev : rev) }) {|build, store| build.merge!(store.field.name.to_sym=>store.data)}
+  def retrieve(revision=0) # :nodoc:
+    revision = 0 if revision == self.rev
+    stores.revision(revision).inject({:_id=>self.id, :_rev => (revision.to_i==0 ? self.rev : revision) }) {|build, store| build.merge!(store.field.name.to_sym=>store.data)}
   end
   
   def store_items items # :nodoc:

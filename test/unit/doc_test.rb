@@ -29,6 +29,12 @@ class DocTest < ActiveSupport::TestCase
     assert_equal({:_id=>451413161, :password=>"big_rock", :user_name=>"fredf", :_rev=>1}, res)
   end
 
+  def test_retrieve_of_current_id_when_id_is_specified
+    doc = docs(:doc_1)
+    res = Doc.retrieve(doc.id, :rev=>2)
+    assert_equal({:_id=>451413161, :user_name=>"nothing", :_rev=>2}, res)
+  end
+
   def test_retrieve_multiple
     doc_ids = [docs(:doc_1).id, docs(:doc_2).id]
     res = Doc.retrieve(doc_ids)
