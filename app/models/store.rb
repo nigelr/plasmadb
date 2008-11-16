@@ -6,6 +6,11 @@ class Store < ActiveRecord::Base
 
   MAX_ITEM_SIZE = 10000
 
+  named_scope :top_level_fields, :conditions => "fields.parent_id is null", :include=>"field"
+#  named_scope :top_level_fields, :conditions => {:is_child=>false}
+  named_scope :is_searchable, :conditions => {:is_searchable=>true}
+
+
   named_scope :revision, lambda { |*rev|
     rev = rev.empty? ? 0 : rev.first
     

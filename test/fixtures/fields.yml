@@ -14,3 +14,18 @@ field_4:
 
 field_5:
   name: name
+
+field_6:
+  name: a
+
+field_7:
+  name: b
+  parent: field_6
+
+field_8:
+  name: c
+  parent: field_6
+  
+field_9:
+  name: d
+  parent: field_8

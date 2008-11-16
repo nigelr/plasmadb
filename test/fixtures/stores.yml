@@ -5,46 +5,83 @@ store_1:
   doc: doc_1
   data: fredf
   rev: 1
+  is_searchable: true
 
 store_2:
   field: field_2
   doc: doc_1
   data: big_rock
   rev: 1
+  is_searchable: true
 
 store_3:
   field: field_3
   doc: doc_2
   data: 25
   rev: 0
+  is_searchable: true
 
 store_4:
   field: field_1
   doc: doc_2
   data: barneyb
   rev: 0
+  is_searchable: true
 
 store_5:
   field: field_5
   doc: doc_2
   data: Barney Rubble
   rev: 0
+  is_searchable: true
 
 store_6:
   field: field_2
   doc: doc_2
   data: barneys_password
   rev: 0
+  is_searchable: true
 
 store_7:
   field: field_1
   doc: doc_1
   data: nothing
   rev: 0
+  is_searchable: true
 
 store_8:
   field: field_4
   doc: doc_2
   data: <%= ["flinstone", 25].to_yaml.inspect %>
   rev: 0
+  is_searchable: true
 
+store_9:
+  field: field_6
+  doc: doc_3
+  data: <%= {:b=>691, :c=>{:d=>692}} %>
+  rev: 0
+  is_searchable: false
+
+# :a=>field_6, :b=>field_7, :c=>field_8, :d=>field_9
+
+store_10:
+  field: field_7
+  doc: doc_3
+  data: 691
+  rev: 0
+  is_searchable: true
+
+store_11:
+  field: field_8
+  doc: doc_3
+  data: <%= {:d=>692} %>
+  rev: 0
+  is_searchable: false
+
+store_12:
+  field: field_9
+  doc: doc_3
+  data: 692
+  rev: 0
+  is_searchable: true

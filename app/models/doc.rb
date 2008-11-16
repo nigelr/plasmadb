@@ -83,21 +83,29 @@ class Doc < ActiveRecord::Base
   # * Array of document ids
   #
   def self.search value, options={}
-    res = Store.include_fields(options[:fields]).search_for(value, options[:operator]).revision(options[:rev]).filter_on_ids(options[:ids]).find(:all, :select=>:doc_id)
+    res = Store.include_fields(options[:fields]
+    ).search_for(value, options[:operator]
+    ).revision(options[:rev]
+    ).filter_on_ids(options[:ids]
+    ).is_searchable.find(:all, :select=>:doc_id)
+
     res.map {|store| store.doc_id}
   end
 
 
   def retrieve(revision=0) # :nodoc:
     revision = 0 if revision == self.rev
-    stores.revision(revision).inject({:_id=>self.id, :_rev => (revision.to_i==0 ? self.rev : revision) }) {|build, store| build.merge!(store.field.name.to_sym=>store.data)}
+
+    stores.revision(revision).top_level_fields.inject(
+      {:_id=>self.id, :_rev => (revision.to_i==0 ? self.rev : revision) }) do |build, store|
+      build.merge!(store.field.name.to_sym=>store.data)
+    end
   end
-  
+
   def store_items items # :nodoc:
     stores.revision(nil).update_all(:rev=>rev)
     for field_name, value in items
-      field_name = field_name.to_s
-      unless field_name == "_id" or field_name == "_rev"
+      unless field_name == :_id or field_name == :_rev
         store_data field_name, value
       end
     end
@@ -106,9 +114,19 @@ class Doc < ActiveRecord::Base
 
   end
 
-  def store_data field_name, value # :nodoc:
-    field = Field.find_or_create_by_name(field_name)
-    stores.create(:field => field, :data => value, :rev => 0)
+  def store_data field_name, value, parent_field=nil # :nodoc:
+    field_name = field_name.to_s
+    field = Field.find_or_create_by_name_and_parent_id(field_name, parent_field.nil? ? nil : parent_field.id)
+    is_searchable = true
+    if value.is_a? Hash
+       is_searchable = false
+      for n_field_name, n_value in value
+        store_data n_field_name, n_value, field
+      end
+    end
+#    else # add this if decide to prevent duplication of data
+      stores.create(:field => field, :data => value, :rev => 0, :is_searchable=> is_searchable) # change is_child to is_hash in table
+#    end
   end
 
 

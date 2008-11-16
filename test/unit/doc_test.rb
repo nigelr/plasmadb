@@ -4,17 +4,17 @@ class DocTest < ActiveSupport::TestCase
   # Retrieval
   def test_retrieve_all
     res = Doc.retrieve :all
-    assert_equal 2, res.length
+    assert_equal Doc.count, res.length
   end
 
   def test_retrieve_first
     res = Doc.retrieve :first
-    assert_equal(res[:_id], 451413160)
+    assert_equal(res[:_id], Doc.first.id)
   end
 
   def test_retrieve_last
     res = Doc.retrieve :last
-    assert_equal(res[:_id], 451413161)
+    assert_equal(res[:_id], Doc.last.id)
   end
 
   def test_retrieve
@@ -109,6 +109,31 @@ class DocTest < ActiveSupport::TestCase
     end
   end
 
+  def test_insert_with_a_hash_value
+    value = {:a1=>{:b1=>1, :c1=>2, :d1=>{:e1=>3}} }
+    assert_difference("Store.count", 5) do
+      assert_difference("Field.count", 5) do
+        doc = Doc.store(value)
+#        puts doc.inspect
+      end
+    end
+    a = Field.find_by_name("a1")
+    b = Field.find_by_name("b1")
+    c = Field.find_by_name("c1")
+    d = Field.find_by_name("d1")
+    e = Field.find_by_name("e1")
+
+    assert_nil a.parent_id
+    assert_equal a.id, b.parent_id
+    assert_equal a.id, c.parent_id
+    assert_equal a.id, d.parent_id
+    assert_equal d.id, e.parent_id
+
+    #    doc.delete(:_id)
+    #    doc.delete(:_rev)
+    #    assert_equal(value, doc)
+  end
+
   # search
   def test_search
     # TODO Add more tests and test results more 
@@ -144,6 +169,18 @@ class DocTest < ActiveSupport::TestCase
     Doc.store(:hobbies=>a)
     ret = Doc.search a
     assert 1, ret.length
+    
+  end
+
+  def test_me
+    doc = Doc.search 691
+    p doc
+    assert !doc.empty?
+
+    doc = docs(:doc_3)
+    p doc
+    doc = Doc.store :b=>"hello"
+    p doc
     
   end
 

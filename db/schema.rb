@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081028065709) do
+ActiveRecord::Schema.define(:version => 20081115093653) do
 
   create_table "docs", :force => true do |t|
     t.integer  "rev"
@@ -18,16 +18,18 @@ ActiveRecord::Schema.define(:version => 20081028065709) do
   end
 
   create_table "fields", :force => true do |t|
-    t.string "name"
+    t.string  "name"
+    t.integer "parent_id"
   end
 
   create_table "stores", :force => true do |t|
     t.integer  "doc_id"
     t.integer  "field_id"
-    t.string   "data",       :limit => 10000
-    t.integer  "rev",                         :default => 0, :null => false
+    t.string   "data",          :limit => 10000
+    t.integer  "rev",                            :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_searchable",                  :default => false
   end
 
   create_table "views", :force => true do |t|
