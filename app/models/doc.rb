@@ -124,6 +124,14 @@ class Doc < ActiveRecord::Base
         store_data n_field_name, n_value, field
       end
     end
+    if value.is_a? Array
+      is_searchable = false
+      for n_value in value
+        store_data field.name, n_value, field
+      end
+
+    end
+
 #    else # add this if decide to prevent duplication of data
       stores.create(:field => field, :data => value, :rev => 0, :is_searchable=> is_searchable) # change is_child to is_hash in table
 #    end

@@ -129,10 +129,19 @@ class DocTest < ActiveSupport::TestCase
     assert_equal a.id, d.parent_id
     assert_equal d.id, e.parent_id
 
-    #    doc.delete(:_id)
-    #    doc.delete(:_rev)
-    #    assert_equal(value, doc)
   end
+
+  def test_insert_of_array
+    value = {:a1=>[961, 962, 963, 964]}
+    assert_difference("Store.count", 5) do
+      assert_difference("Field.count", 2) do
+        doc = Doc.store(value)
+        p doc
+      end
+    end
+    
+  end
+
 
   # search
   def test_search
