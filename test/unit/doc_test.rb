@@ -136,10 +136,8 @@ class DocTest < ActiveSupport::TestCase
     assert_difference("Store.count", 5) do
       assert_difference("Field.count", 2) do
         doc = Doc.store(value)
-        p doc
       end
     end
-    
   end
 
 
