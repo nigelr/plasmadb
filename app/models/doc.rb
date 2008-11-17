@@ -121,14 +121,14 @@ class Doc < ActiveRecord::Base
     is_searchable = true
     if value.is_a? Hash
       is_searchable = false
-      for n_field_name, n_value in value
-        store_data n_field_name, n_value, field
+      for hash_field_name, hash_value in value
+        store_data hash_field_name, hash_value, field
       end
     end
     if value.is_a? Array
       is_searchable = false
-      for n_value in value
-        store_data field.name, n_value, field
+      for array_value in value
+        store_data field.name, array_value, field
       end
 
     end
