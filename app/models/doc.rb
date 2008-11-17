@@ -83,11 +83,12 @@ class Doc < ActiveRecord::Base
   # * Array of document ids
   #
   def self.search value, options={}
-    res = Store.include_fields(options[:fields]
-    ).search_for(value, options[:operator]
-    ).revision(options[:rev]
-    ).filter_on_ids(options[:ids]
-    ).is_searchable.find(:all, :select=>:doc_id)
+    res = Store.include_fields(options[:fields]).
+      search_for(value, options[:operator]).
+      revision(options[:rev]).
+      filter_on_ids(options[:ids]).
+      is_searchable.
+      find(:all, :select=>:doc_id)
 
     res.map {|store| store.doc_id}
   end
@@ -119,7 +120,7 @@ class Doc < ActiveRecord::Base
     field = Field.find_or_create_by_name_and_parent_id(field_name, parent_field.nil? ? nil : parent_field.id)
     is_searchable = true
     if value.is_a? Hash
-       is_searchable = false
+      is_searchable = false
       for n_field_name, n_value in value
         store_data n_field_name, n_value, field
       end
@@ -132,9 +133,9 @@ class Doc < ActiveRecord::Base
 
     end
 
-#    else # add this if decide to prevent duplication of data
-      stores.create(:field => field, :data => value, :rev => 0, :is_searchable=> is_searchable) # change is_child to is_hash in table
-#    end
+    #    else # add this if decide to prevent duplication of data
+    stores.create(:field => field, :data => value, :rev => 0, :is_searchable=> is_searchable) # change is_child to is_hash in table
+    #    end
   end
 
 
