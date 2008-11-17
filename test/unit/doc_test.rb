@@ -169,26 +169,22 @@ class DocTest < ActiveSupport::TestCase
     ret = Doc.search("n", :ids=>docs(:doc_2).id, :operator => "*")
     assert !ret.empty?
 
-    ret = Doc.search(["flinstone", 25])
-    assert !ret.empty?
+    store = stores(:store_9)
+    ret = Doc.search store.data
+    assert_equal store.doc_id, ret.first
+
+    store = stores(:store_11)
+    ret = Doc.search store.data
+    assert_equal store.doc_id, ret.first
 
     a = {:a=>1, :b=>"x", :c=>[10,20]}
     Doc.store(:hobbies=>a)
     ret = Doc.search a
     assert 1, ret.length
-    
-  end
 
-  def test_me
-    doc = Doc.search 691
-    p doc
-    assert !doc.empty?
-
-    doc = docs(:doc_3)
-    p doc
-    doc = Doc.store :b=>"hello"
-    p doc
-    
+    store = stores(:store_8)
+    ret = Doc.search(store.data)
+    assert !ret.empty?
   end
 
   # fields

@@ -87,7 +87,7 @@ class Doc < ActiveRecord::Base
       search_for(value, options[:operator]).
       revision(options[:rev]).
       filter_on_ids(options[:ids]).
-      is_searchable.
+      is_searchable(value).
       find(:all, :select=>:doc_id)
 
     res.map {|store| store.doc_id}

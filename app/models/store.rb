@@ -7,8 +7,25 @@ class Store < ActiveRecord::Base
   MAX_ITEM_SIZE = 10000
 
   named_scope :top_level_fields, :conditions => "fields.parent_id is null", :include=>"field"
-#  named_scope :top_level_fields, :conditions => {:is_child=>false}
-  named_scope :is_searchable, :conditions => {:is_searchable=>true}
+  #  named_scope :top_level_fields, :conditions => {:is_child=>false}
+  #  named_scope :is_searchable, :conditions => {:is_searchable=>true}
+  named_scope :is_searchable, lambda { |value|
+    is_compound = value.is_a?( Hash) || value.is_a?( Array)
+#    puts "is_compound=#{is_compound.inspect}"
+#    puts "value=#{value.class}"
+    {
+      :conditions => {:is_searchable=>!is_compound}
+    }
+
+  }
+#  named_scope :is_searchable, lambda { |*all|
+#    all = all.empty? ? true : all.first
+#    {
+#      :conditions => {:is_searchable=>!all}
+#    }
+#
+#  }
+
 
 
   named_scope :revision, lambda { |*rev|

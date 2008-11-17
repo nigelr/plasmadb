@@ -54,12 +54,12 @@ store_8:
   doc: doc_2
   data: <%= ["flinstone", 25].to_yaml.inspect %>
   rev: 0
-  is_searchable: true
+  is_searchable: false
 
 store_9:
   field: field_6
   doc: doc_3
-  data: <%= {:b=>691, :c=>{:d=>692}} %>
+  data: <%= {:b=>691, :c=>{:d=>692}}.to_yaml.inspect %>
   rev: 0
   is_searchable: false
 
@@ -75,7 +75,7 @@ store_10:
 store_11:
   field: field_8
   doc: doc_3
-  data: <%= {:d=>692} %>
+  data: <%= {:d=>692}.to_yaml.inspect %>
   rev: 0
   is_searchable: false
 
