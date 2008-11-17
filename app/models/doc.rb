@@ -110,9 +110,6 @@ class Doc < ActiveRecord::Base
         store_data field_name, value
       end
     end
-
-    #    build_it items
-
   end
 
   def store_data field_name, value, parent_field=nil # :nodoc:
@@ -132,26 +129,8 @@ class Doc < ActiveRecord::Base
       end
 
     end
-
     #    else # add this if decide to prevent duplication of data
     stores.create(:field => field, :data => value, :rev => 0, :is_searchable=> is_searchable) # change is_child to is_hash in table
     #    end
   end
-
-
-  def build_it args # :nodoc:
-    for view in View.all
-      build_view_data view.field.name do
-        eval view.block_code
-      end
-    end
-  end
-
-  def build_view_data view_name, default_value = nil # :nodoc:
-    view_name = "_" + view_name.to_s
-    begin
-      store_data view_name, yield
-    end
-  end
-
 end
