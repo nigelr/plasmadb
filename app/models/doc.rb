@@ -77,8 +77,8 @@ class Doc < ActiveRecord::Base
   # *  supports singular, array and nesting of fields such as:
   # *  :fields => :first_name
   # *  :fields => [:first_name, :last_name]
-  # *  :fields => :phone_numbers => :mobile
-  # *  :fields => :phone_numbers => {:fax => [:free_call, :local]}
+  # *  :fields => {:phone_numbers => :mobile}
+  # *  :fields => {:phone_numbers => {:fax => [:free_call, :local]}}
   # 
   # *  operator
   #     "==" (default), ">", "<", ">=", "<=", "!=", "*" contains, "^" begins, "$" ends
