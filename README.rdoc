@@ -30,7 +30,10 @@ DOD has three main methods
 * <b><tt>Doc.store { :_id => 96, :_rev => 3, :user_name => "atomicboy", :age => 12 }</b></tt>  => Updates document 96 with new values
 ==== Search
 * <b><tt>Doc.search "superman"</b></tt>  => Returns an array of document ids with exact match for "superman" in any field
-* <b><tt>Doc.search "superman", :fields=>:user_name</b></tt>  => Returns an array of document ids with exact match for "superman" in fileds named "user_name"
+* <b><tt>Doc.search "superman", :fields=>:user_name</b></tt>  => Returns an array of document ids with exact match for "superman" in field named "user_name"
+* <b><tt>Doc.search "superman", :fields=>[:user_name, :login_name]</b></tt>  => Returns an array of document ids with exact match for "superman" in fields named "user_name" or "login_name"
+* <b><tt>Doc.search "super", :fields=>{:name=>[:first, :middle, :last]}</b></tt>  => Returns an array of document ids with exact match for "superman" in fields named :name=>:first or :name=>:middle or :name=>:last
+* <b><tt>Doc.search "123456789", :fields=>{:phone=>{:office=>:freecall}}</b></tt>  => Returns an array of document ids with exact match for "12345678" in field named :phone=>{:office=>:freecall}} 
 * <b><tt>Doc.search "per", :operator => "*"</b></tt>  => Returns an array documents which contains the letters "per" in any_field
 * <b><tt>Doc.search "superman", :ids => [45, 10]</b></tt>  => Returns an array of document ids with exact match for "superman" in any field. Only searches the supplied document ids
 
