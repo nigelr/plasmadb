@@ -114,7 +114,7 @@ class DocTest < ActiveSupport::TestCase
     assert_difference("Store.count", 5) do
       assert_difference("Field.count", 5) do
         doc = Doc.store(value)
-#        puts doc.inspect
+        #        puts doc.inspect
       end
     end
     a = Field.find_by_name("a1")
@@ -185,6 +185,20 @@ class DocTest < ActiveSupport::TestCase
     store = stores(:store_8)
     ret = Doc.search(store.data)
     assert !ret.empty?
+
+    doc_3 = docs(:doc_3)
+
+    ret = Doc.search 692
+    assert_equal [doc_3.id], ret
+
+    ret = Doc.search 692, :fields=>:d
+    assert ret.empty?
+
+    ret = Doc.search 692, :fields=>[{:a=>{:c=>:d}}, {:a=>:b}]
+    assert_equal [doc_3.id], ret
+
+    ret = Doc.search 691, :fields=>[{:a=>{:c=>:d}}, {:a=>:b}]
+    assert_equal [doc_3.id], ret
   end
 
   # fields

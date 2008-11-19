@@ -74,6 +74,12 @@ class Doc < ActiveRecord::Base
   # * value
   # * options:
   # *  fields - List of field names to search on (if left blank then all)
+  # *  supports singular, array and nesting of fields such as:
+  # *  :fields => :first_name
+  # *  :fields => [:first_name, :last_name]
+  # *  :fields => :phone_numbers => :mobile
+  # *  :fields => :phone_numbers => {:fax => [:free_call, :local]}
+  # 
   # *  operator
   #     "==" (default), ">", "<", ">=", "<=", "!=", "*" contains, "^" begins, "$" ends
   # *  rev - revision to search (:all, :history, :current (default) or revision number)
