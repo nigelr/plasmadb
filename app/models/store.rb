@@ -94,6 +94,8 @@ class Store < ActiveRecord::Base
           field_id = Field.find_by_name_and_parent_id(hash_field.to_s, parent_field_id)
           field_ids += extract_all_fields(hash_value, field_id)
         end
+      elsif field_name == "*"
+        field_ids += Field.find_all_by_parent_id(parent_field_id)
       else
         field  = Field.find_by_name_and_parent_id(field_name.to_s, parent_field_id) #map {|field| field.id}
         field_ids << field.id if field

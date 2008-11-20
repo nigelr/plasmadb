@@ -79,6 +79,7 @@ class Doc < ActiveRecord::Base
   # *  :fields => [:first_name, :last_name]
   # *  :fields => {:phone_numbers => :mobile}
   # *  :fields => {:phone_numbers => {:fax => [:free_call, :local]}}
+  # *  :fields => {:phone_numbers => "*"} -> returns all children fields under :phone_numbers
   # 
   # *  operator
   #     "==" (default), ">", "<", ">=", "<=", "!=", "*" contains, "^" begins, "$" ends

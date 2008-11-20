@@ -29,3 +29,7 @@ field_8:
 field_9:
   name: d
   parent: field_8
+
+field_10:
+  name: e
+  parent: field_6

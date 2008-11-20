@@ -199,6 +199,18 @@ class DocTest < ActiveSupport::TestCase
 
     ret = Doc.search 691, :fields=>[{:a=>{:c=>:d}}, {:a=>:b}]
     assert_equal [doc_3.id], ret
+
+    ret = Doc.search 693, :fields=>{:a=>"*"}
+    assert_equal [doc_3.id], ret
+
+    ret = Doc.search 691, :fields=>{:a=>"*"}
+    assert_equal [doc_3.id], ret
+
+    ret = Doc.search 692, :fields=>{:a=>"*"}
+    assert ret.empty?
+
+    ret = Doc.search 692, :fields=>{:a=>{:c=>"*"}}
+    assert_equal [doc_3.id], ret
   end
 
   # fields
