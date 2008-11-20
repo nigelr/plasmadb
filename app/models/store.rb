@@ -11,22 +11,13 @@ class Store < ActiveRecord::Base
   #  named_scope :is_searchable, :conditions => {:is_searchable=>true}
   named_scope :is_searchable, lambda { |value|
     is_compound = value.is_a?( Hash) || value.is_a?( Array)
-#    puts "is_compound=#{is_compound.inspect}"
-#    puts "value=#{value.class}"
+    #    puts "is_compound=#{is_compound.inspect}"
+    #    puts "value=#{value.class}"
     {
       :conditions => {:is_searchable=>!is_compound}
     }
 
   }
-#  named_scope :is_searchable, lambda { |*all|
-#    all = all.empty? ? true : all.first
-#    {
-#      :conditions => {:is_searchable=>!all}
-#    }
-#
-#  }
-
-
 
   named_scope :revision, lambda { |*rev|
     rev = rev.empty? ? 0 : rev.first
@@ -42,12 +33,15 @@ class Store < ActiveRecord::Base
     }
   }
 
+
+
   named_scope :include_fields, lambda {|fields|
+
+
     if fields.nil? 
       condition = nil
     else
-      field_names = [fields].flatten.map {|field_name| field_name.to_s}
-      field_ids = Field.find_all_by_name(field_names).map {|field| field.id}
+      field_ids = extract_all_fields(fields)
       condition = {:field_id=>field_ids}
     end
     { :conditions=>condition }
@@ -90,6 +84,23 @@ class Store < ActiveRecord::Base
     #    puts ids.inspect
     {:conditions=>( ids.empty? || ids.first.nil? ? nil :  {:doc_id=>ids.flatten})}
   }
-  
+
+  def self.extract_all_fields field_names, parent_field_id=nil
+    field_ids = []
+    field_names = [field_names].flatten
+    for field_name in field_names
+      if field_name.is_a? Hash
+        for hash_field, hash_value in field_name
+          field_id = Field.find_by_name_and_parent_id(hash_field.to_s, parent_field_id)
+          field_ids += extract_all_fields(hash_value, field_id)
+        end
+      else
+        field  = Field.find_by_name_and_parent_id(field_name.to_s, parent_field_id) #map {|field| field.id}
+        field_ids << field.id if field
+      end
+    end
+    field_ids
+  end
+
 end
 
