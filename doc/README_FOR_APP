@@ -20,6 +20,9 @@ DOD has three main methods
 
 === Usage Examples
 ==== Retrieve
+* <b><tt>Doc.retrieve :all</b></tt>  => retrieves all document
+* <b><tt>Doc.retrieve :first</b></tt>  => retrieves first document
+* <b><tt>Doc.retrieve :last</b></tt>  => retrieves last document
 * <b><tt>Doc.retrieve 56</b></tt>     => retrieves single document
 * <b><tt>Doc.retrieve [45, 96, 100, 4]</b></tt>  => retrieves these documents
 ==== Store
@@ -27,7 +30,11 @@ DOD has three main methods
 * <b><tt>Doc.store { :_id => 96, :_rev => 3, :user_name => "atomicboy", :age => 12 }</b></tt>  => Updates document 96 with new values
 ==== Search
 * <b><tt>Doc.search "superman"</b></tt>  => Returns an array of document ids with exact match for "superman" in any field
-* <b><tt>Doc.search "superman", :fields=>:user_name</b></tt>  => Returns an array of document ids with exact match for "superman" in fileds name "user_name"
+* <b><tt>Doc.search "superman", :fields=>:user_name</b></tt>  => Returns an array of document ids with exact match for "superman" in field named "user_name"
+* <b><tt>Doc.search "superman", :fields=>[:user_name, :login_name]</b></tt>  => Returns an array of document ids with exact match for "superman" in fields named "user_name" or "login_name"
+* <b><tt>Doc.search "super", :fields=>{:name=>[:first, :middle, :last]}</b></tt>  => Returns an array of document ids with exact match for "superman" in fields named :name=>:first or :name=>:middle or :name=>:last
+* <b><tt>Doc.search "super", :fields=>{:name=>"*"}</b></tt>  => Returns an array of document ids with exact match for "superman" in fields named :name=>:first or :name=>:middle or :name=>:last or any other field directly below :name
+* <b><tt>Doc.search "123456789", :fields=>{:phone=>{:office=>:freecall}}</b></tt>  => Returns an array of document ids with exact match for "12345678" in field named :phone=>{:office=>:freecall}}
 * <b><tt>Doc.search "per", :operator => "*"</b></tt>  => Returns an array documents which contains the letters "per" in any_field
 * <b><tt>Doc.search "superman", :ids => [45, 10]</b></tt>  => Returns an array of document ids with exact match for "superman" in any field. Only searches the supplied document ids
 
@@ -42,4 +49,24 @@ Build "rake doc:app" for documentation.
 * Nigel Rausch
 
 == License
-* None
+The MIT License
+
+Copyright (c) 2008 Nigel Rausch
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
