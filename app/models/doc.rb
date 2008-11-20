@@ -18,6 +18,7 @@ class Doc < ActiveRecord::Base
   # * nil if none found
   #
   def self.retrieve id, options={}
+    validate_options(options, [:rev])
     case id
     when Symbol
       if id == :all
@@ -90,6 +91,7 @@ class Doc < ActiveRecord::Base
   # * Array of document ids
   #
   def self.search value, options={}
+    validate_options(options, [:fields, :rev, :ids, :operator])
     res = Store.include_fields(options[:fields]).
       search_for(value, options[:operator]).
       revision(options[:rev]).
@@ -99,7 +101,6 @@ class Doc < ActiveRecord::Base
 
     res.map {|store| store.doc_id}
   end
-
 
   def retrieve(revision=0) # :nodoc:
     revision = 0 if revision == self.rev
@@ -140,4 +141,12 @@ class Doc < ActiveRecord::Base
     stores.create(:field => field, :data => value, :rev => 0, :is_searchable=> is_searchable) # change is_child to is_hash in table
     #    end
   end
+
+  def self.validate_options(options, valid_options)
+    invalid_options = (options.keys - valid_options)
+    raise "Invalid option(s) of #{invalid_options.join(", ")}" unless invalid_options.empty?
+  end
+
+
+
 end

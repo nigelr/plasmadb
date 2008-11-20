@@ -222,5 +222,9 @@ class DocTest < ActiveSupport::TestCase
     assert_equal("user_name", active_fields.first.name)
   end
 
+  def test_valid_options
+    assert_raise(RuntimeError) { Doc.search "super", :unknown_option=>"meme", :ids=>[1,2,3] }
+    assert_raise(RuntimeError) { Doc.retrieve 1, :unknown_option=>"meme" }
+  end
   
 end
