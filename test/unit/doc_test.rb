@@ -226,5 +226,31 @@ class DocTest < ActiveSupport::TestCase
     assert_raise(RuntimeError) { Doc.search "super", :unknown_option=>"meme", :ids=>[1,2,3] }
     assert_raise(RuntimeError) { Doc.retrieve 1, :unknown_option=>"meme" }
   end
+
+  # remove
+  def test_remove
+    doc = docs(:doc_1)
+    store_1 = stores(:store_1)
+    assert_difference("Store.count",0) do
+      ret = Doc.remove doc.id
+      assert_equal [doc.id], ret
+      doc.stores.each {|item| assert item.rev != 0}
+      assert_equal store_1.rev, Store.find(store_1.id).rev
+    end
+  end
+
+  def test_remove_multiple
+    doc_1 = docs(:doc_1)
+    doc_2 = docs(:doc_2)
+    ret = Doc.remove [doc_1.id, doc_2.id]
+    assert( ([doc_1.id, doc_2.id] - ret).empty?)
+    doc_1.stores.each {|item| assert item.rev != 0}
+    doc_2.stores.each {|item| assert item.rev != 0}
+  end
+
+  def test_remove_non_existent
+    ret = Doc.remove 69
+    assert_nil ret
+  end
   
 end

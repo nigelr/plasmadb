@@ -102,6 +102,36 @@ class Doc < ActiveRecord::Base
     res.map {|store| store.doc_id}
   end
 
+
+  # Remove document by id(s)
+  #
+  # ==== Parameters
+  # * id
+  # *    single id
+  # *    array of ids
+  # * options:
+  # *  TBA
+  #
+  # ==== Returns
+  # * array of document id(s) removed
+  # * nil if none found
+  #
+  # ===== Note
+  # This is not a delete, it changes the document stores revision to previous number so it is no longer active
+  #
+  def self.remove id, options=nil
+    ret = []
+    for doc in find_all_by_id(id)
+      doc.remove
+      ret << doc.id
+    end
+    ret.empty? ? nil : ret
+  end
+
+  def remove # :nodoc:
+    stores.update_all({:rev=>rev}, {:rev=>0})
+  end
+
   def retrieve(revision=0) # :nodoc:
     revision = 0 if revision == self.rev
 
