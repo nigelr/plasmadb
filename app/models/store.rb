@@ -85,7 +85,7 @@ class Store < ActiveRecord::Base
     {:conditions=>( ids.empty? || ids.first.nil? ? nil :  {:doc_id=>ids.flatten})}
   }
 
-  def self.extract_all_fields field_names, parent_field_id=nil
+  def self.extract_all_fields field_names, parent_field_id=nil # :nodoc:
     field_ids = []
     field_names = [field_names].flatten
     for field_name in field_names

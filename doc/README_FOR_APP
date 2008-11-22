@@ -26,8 +26,8 @@ DOD has three main methods
 * <b><tt>Doc.retrieve 56</b></tt>     => retrieves single document
 * <b><tt>Doc.retrieve [45, 96, 100, 4]</b></tt>  => retrieves these documents
 ==== Store
-* <b><tt>Doc.store { :user_name => "superman", :pasword => "letmein" }</b></tt>  => creates new document
-* <b><tt>Doc.store { :_id => 96, :_rev => 3, :user_name => "atomicboy", :age => 12 }</b></tt>  => Updates document 96 with new values
+* <b><tt>Doc.store :user_name => "superman", :pasword => "letmein"</b></tt>  => creates new document
+* <b><tt>Doc.store :_id => 96, :_rev => 3, :user_name => "atomicboy", :age => 12</b></tt>  => Updates document 96 with new values
 ==== Search
 * <b><tt>Doc.search "superman"</b></tt>  => Returns an array of document ids with exact match for "superman" in any field
 * <b><tt>Doc.search "superman", :fields=>:user_name</b></tt>  => Returns an array of document ids with exact match for "superman" in field named "user_name"

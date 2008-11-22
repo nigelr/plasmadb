@@ -142,7 +142,7 @@ class Doc < ActiveRecord::Base
     #    end
   end
 
-  def self.validate_options(options, valid_options)
+  def self.validate_options(options, valid_options) # :nodoc:
     invalid_options = (options.keys - valid_options)
     raise "Invalid option(s) of #{invalid_options.join(", ")}" unless invalid_options.empty?
   end
