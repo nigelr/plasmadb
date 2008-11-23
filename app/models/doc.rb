@@ -18,22 +18,24 @@ class Doc < ActiveRecord::Base
   # * nil if none found
   #
   def self.retrieve id, options={}
-    validate_options(options, [:rev])
-    case id
-    when Symbol
-      if id == :all
-        docs = self.find(id)
+    with_scope(:find=>{:conditions=>{:archived_at=>nil}}) do
+      validate_options(options, [:rev])
+      case id
+      when Symbol
+        if id == :all
+          docs = self.find(id)
+        else
+          docs = [self.find(id)]
+        end
       else
-        docs = [self.find(id)]
+        docs = self.find_all_by_id(id)
       end
-    else
-      docs = self.find_all_by_id(id)
+      unless docs.empty?
+        res = (id.is_a?(Array) or id == :all) ? docs.map {|doc| doc.retrieve} : docs.first.retrieve(options[:rev]||0)
+        #     a = docs.map {|doc| doc.retrieve} #: docs.first.retrieve(options[:rev]||0)
+      end
+      return res
     end
-    unless docs.empty?
-      res = (id.is_a?(Array) or id == :all) ? docs.map {|doc| doc.retrieve} : docs.first.retrieve(options[:rev]||0)
-      #     a = docs.map {|doc| doc.retrieve} #: docs.first.retrieve(options[:rev]||0)
-    end
-    return res
   end
 
   # Stores or updates a document into the database
@@ -130,6 +132,7 @@ class Doc < ActiveRecord::Base
 
   def remove # :nodoc:
     stores.update_all({:rev=>rev}, {:rev=>0})
+    update_attribute(:archived_at, Time.now)
   end
 
   def retrieve(revision=0) # :nodoc:

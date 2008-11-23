@@ -52,6 +52,13 @@ class DocTest < ActiveSupport::TestCase
     assert_nil Doc.retrieve([id,id+1])
   end
 
+  def test_retrieve_when_id_is_archived
+    id = Doc.last.id
+    Doc.remove id
+
+    assert_nil Doc.retrieve( id)
+  end
+
 
   # Update
   def test_update
@@ -236,6 +243,7 @@ class DocTest < ActiveSupport::TestCase
       assert_equal [doc.id], ret
       doc.stores.each {|item| assert item.rev != 0}
       assert_equal store_1.rev, Store.find(store_1.id).rev
+      assert(!doc.reload.archived_at.nil?)
     end
   end
 

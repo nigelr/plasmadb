@@ -9,12 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081115093653) do
+ActiveRecord::Schema.define(:version => 20081122110526) do
 
   create_table "docs", :force => true do |t|
     t.integer  "rev"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "archived_at"
   end
 
   create_table "fields", :force => true do |t|
