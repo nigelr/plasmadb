@@ -3,7 +3,7 @@ class CreateStores < ActiveRecord::Migration
     create_table :stores do |t|
       t.references :doc
       t.references :field
-      t.string :data, :limit => Store::MAX_ITEM_SIZE
+      t.string :data_item, :limit => Store::MAX_ITEM_SIZE
 
       t.integer :rev, :default=>0, :null => false
       t.timestamps

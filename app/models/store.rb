@@ -1,8 +1,9 @@
+require "yaml"  
 class Store < ActiveRecord::Base
   belongs_to :doc
   belongs_to :field
 
-  serialize :data
+#  serialize :data
 
   MAX_ITEM_SIZE = 10000
 
@@ -102,6 +103,17 @@ class Store < ActiveRecord::Base
       end
     end
     field_ids
+  end
+
+
+  def data
+    puts "hello"
+    puts data_item.inspect
+    YAML.load data_item
+  end
+
+  def data=(value)
+    data_item = value.to_yaml
   end
 
 end

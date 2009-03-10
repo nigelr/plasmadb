@@ -40,7 +40,7 @@ class DocTest < ActiveSupport::TestCase
     res = Doc.retrieve(doc_ids)
 
     assert_equal(res.length, 2)
-    #    puts res.inspect
+        puts res.inspect
     assert res.include?({:hobbies=>["flinstone", 25] ,:password=>"barneys_password", :age=>25, :name=>"Barney Rubble", :_id=>451413160, :user_name=>"barneyb", :_rev=>1})
     assert res.include?({:_id=>451413161, :user_name=>"nothing", :_rev=>2})
   end

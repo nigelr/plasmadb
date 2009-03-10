@@ -3,63 +3,63 @@
 store_1:
   field: field_1
   doc: doc_1
-  data: fredf
+  data_item: <%= "fredf".to_yaml.inspect%>
   rev: 1
   is_searchable: true
 
 store_2:
   field: field_2
   doc: doc_1
-  data: big_rock
+  data_item: <%= "big_rock".to_yaml.inspect%>
   rev: 1
   is_searchable: true
 
 store_3:
   field: field_3
   doc: doc_2
-  data: 25
+  data_item: <%=  25.to_yaml.inspect%>
   rev: 0
   is_searchable: true
 
 store_4:
   field: field_1
   doc: doc_2
-  data: barneyb
+  data_item: <%=  "barneyb".to_yaml.inspect%>
   rev: 0
   is_searchable: true
 
 store_5:
   field: field_5
   doc: doc_2
-  data: Barney Rubble
+  data_item: <%=  "Barney Rubble".to_yaml.inspect%>
   rev: 0
   is_searchable: true
 
 store_6:
   field: field_2
   doc: doc_2
-  data: barneys_password
+  data_item: <%=  "barneys_password".to_yaml.inspect%>
   rev: 0
   is_searchable: true
 
 store_7:
   field: field_1
   doc: doc_1
-  data: nothing
+  data_item: <%=  "nothing".to_yaml.inspect%>
   rev: 0
   is_searchable: true
 
 store_8:
   field: field_4
   doc: doc_2
-  data: <%= ["flinstone", 25].to_yaml.inspect %>
+  data_item: <%= ["flinstone", 25].to_yaml.inspect %>
   rev: 0
   is_searchable: false
 
 store_9:
   field: field_6
   doc: doc_3
-  data: <%= {:b=>691, :c=>{:d=>692}, :e=>693}.to_yaml.inspect %>
+  data_item: <%= {:b=>691, :c=>{:d=>692}, :e=>693}.to_yaml.inspect %>
   rev: 0
   is_searchable: false
 
@@ -68,27 +68,27 @@ store_9:
 store_10:
   field: field_7
   doc: doc_3
-  data: 691
+  data_item: <%=  691.to_yaml.inspect%>
   rev: 0
   is_searchable: true
 
 store_11:
   field: field_8
   doc: doc_3
-  data: <%= {:d=>692}.to_yaml.inspect %>
+  data_item: <%= {:d=>692}.to_yaml.inspect %>
   rev: 0
   is_searchable: false
 
 store_12:
   field: field_9
   doc: doc_3
-  data: 692
+  data_item: <%=  692.to_yaml.inspect%>
   rev: 0
   is_searchable: true
 
 store_13:
   field: field_10
   doc: doc_3
-  data: 693
+  data_item: <%=  693.to_yaml.inspect%>
   rev: 0
   is_searchable: true

@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(:version => 20081122110526) do
   create_table "stores", :force => true do |t|
     t.integer  "doc_id"
     t.integer  "field_id"
-    t.string   "data",          :limit => 10000
+    t.string   "data_item",     :limit => 10000
     t.integer  "rev",                            :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
